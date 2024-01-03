@@ -7,6 +7,7 @@ SHARK_MEV_REPOSITORY=${SHARK_MEV_REPOSITORY:="https://github.com/mvermeulen/shar
 
 # get a copy of my example scripts
 mkdir -p /src
+cd /src
 git clone --depth=1 ${SHARK_MEV_REPOSITORY}
 
 # pull in SHARK
