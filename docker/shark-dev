@@ -2,9 +2,15 @@
 ARG base_docker="rocm-dev:5.7.2"
 FROM ${base_docker}
 
+ARG shark_repository="https://github.com/nod-ai/SHARK"
+ARG shark_branch="SHARK-1.0"
+
 # Set up SHARK
 RUN apt install -y python3.11 python3.11-venv
 COPY scripts/build_shark.sh /workdir/build_shark.sh
-RUN /workdir/build_shark.sh
+RUN SHARK_REPOSITORY=${shark_repository} SHARK_BRANCH=${shark_branch} /workdir/build_shark.sh
 
-CMD echo "hello"
+RUN echo 'echo "source shark1.venv/bin/activate"' > /etc/profile.d/welcome.sh
+
+WORKDIR /src/${shark_branch}
+ENTRYPOINT ["/bin/bash", "-l", "-c"]
