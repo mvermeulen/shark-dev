@@ -6,7 +6,7 @@ ARG shark_repository="https://github.com/nod-ai/SHARK"
 ARG shark_branch="SHARK-1.0"
 
 # Set up SHARK
-RUN apt install -y python3.11 python3.11-venv
+RUN apt install -y python3.11 python3.11-venv vulkan-tools
 COPY scripts/build_shark.sh /workdir/build_shark.sh
 RUN SHARK_REPOSITORY=${shark_repository} SHARK_BRANCH=${shark_branch} /workdir/build_shark.sh
 
