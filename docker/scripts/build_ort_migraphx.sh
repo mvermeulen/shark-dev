@@ -2,7 +2,7 @@
 ORT_REPOSITORY=${ORT_REPOSITORY:="https://github.com/mvermeulen/onnxruntime"}
 ORT_BRANCH=${ORT_BRANCH:="mev_add_shark"}
 ROCM_VERSION=${ROCM_VERSION:="5.7.2"}
-WORKDIR=${WORKSPACE:="/workdir"}
+WORKDIR=${WORKDIR:="/workdir"}
 
 pip3 install packaging
 
