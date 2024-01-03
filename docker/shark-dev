@@ -1,0 +1,10 @@
+# Basic SHARK environment
+ARG base_docker="rocm-dev:5.7.2"
+FROM ${base_docker}
+
+# Set up SHARK
+RUN apt install -y python3.11 python3.11-venv
+COPY scripts/build_shark.sh /workdir/build_shark.sh
+RUN /workdir/build_shark.sh
+
+CMD echo "hello"
