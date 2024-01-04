@@ -11,7 +11,7 @@ ADD huggingface /root/.cache/huggingface
 ADD torch /root/.cache/torch
 
 # Set up SHARK
-RUN apt install -y python3.11 python3.11-venv vulkan-tools
+RUN apt install -y python3.11 python3.11-venv curl vulkan-tools
 COPY scripts/build_shark.sh /workdir/build_shark.sh
 RUN SHARK_REPOSITORY=${shark_repository} SHARK_BRANCH=${shark_branch} /workdir/build_shark.sh
 
