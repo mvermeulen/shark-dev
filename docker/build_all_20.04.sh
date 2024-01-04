@@ -7,9 +7,9 @@ docker build -f rocm-dev-20.04 -t rocm:${TAG} \
        --build-arg base_docker="ubuntu:20.04" \
        . 2>&1 | tee rocm:${TAG}.${DATESTAMP}.log
 
-docker build -f shark-dev -t shark:${TAG} \
-       --build-arg base_docker=rocm:${TAG} \
-       . 2>&1 | tee shark.${TAG}.${DATESTAMP}.log
+#docker build -f shark-dev -t shark:${TAG} \
+#       --build-arg base_docker=rocm:${TAG} \
+#       . 2>&1 | tee shark.${TAG}.${DATESTAMP}.log
 
 docker build -f migraphx-dev -t migraphx:${TAG} \
        --build-arg base_docker=rocm:${TAG} \
