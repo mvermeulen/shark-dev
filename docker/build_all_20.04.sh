@@ -2,7 +2,7 @@
 TAG=${TAG:="20.04-6.0"}
 DATESTAMP=`date '+%Y%m%d-%H%M'`
 
-docker build -f rocm-dev -t rocm:${TAG} \
+docker build -f rocm-dev-20.04 -t rocm:${TAG} \
        --build-arg install_script="https://repo.radeon.com/amdgpu-install/6.0/ubuntu/focal/amdgpu-install_6.0.60000-1_all.deb" \
        --build-arg base_docker="ubuntu:20.04" \
        . 2>&1 | tee rocm:${TAG}.${DATESTAMP}.log
