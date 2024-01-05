@@ -5,6 +5,11 @@ INSTALLDIR=${INSTALLDIR:="/src"}
 WORKDIR=${WORKDIR:="/workdir"}
 GPU_TARGETS=${GPU_TARGETS:="gfx906;gfx1030"}
 
+CMAKE_VERSION=3.26.6
+cd /usr/local && \
+    wget -q -O - https://github.com/Kitware/CMake/releases/download/v${CMAKE_VERSION}/cmake-${CMAKE_VERSION}-Linux-x86_64.tar.gz | tar zxf -
+export PATH=/usr/local/cmake-${CMAKE_VERSION}-linux-x86_64/bin:$PATH
+
 pip3 install https://github.com/RadeonOpenCompute/rbuild/archive/master.tar.gz
 mkdir -p ${INSTALLDIR}
 cd ${INSTALLDIR}
