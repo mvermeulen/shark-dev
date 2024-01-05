@@ -1,0 +1,7 @@
+# Base ONNX runtime package built on top of MIGraphX
+ARG base_docker="migraphx:5.7.2"
+FROM ${base_docker}
+
+# Set up MIGraphX and ORT environment
+COPY scripts/build_ort_migraphx.sh /workdir/build_ort_migraphx.sh
+RUN /workdir/build_ort_migraphx.sh
