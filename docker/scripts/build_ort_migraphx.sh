@@ -18,6 +18,7 @@ git clone --recursive --branch ${ORT_BRANCH} --depth=1 ${ORT_REPOSITORY}
 cd onnxruntime
 ./build.sh --parallel --cmake_extra_defines ONNXRUNTIME_VERSION=`cat ./VERSION_NUMBER` CMAKE_HIP_FLAGS=-Wno-deprecated-builtins --config Release --skip_tests --build_wheel --use_migraphx --use_rocm --rocm_version=${ROCM_VERSION} --rocm_home /opt/rocm --allow_running_as_root
 
+cp /src/onnxruntime/build/Linux/Release/dist/*.whl ${WORKDIR}
 pip3 install /src/onnxruntime/build/Linux/Release/dist/*.whl
 
 # set up python environment
