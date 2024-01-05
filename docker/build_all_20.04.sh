@@ -15,6 +15,6 @@ docker build -f migraphx-dev -t migraphx:${TAG} \
        --build-arg base_docker=rocm:${TAG} \
        . 2>&1 | tee migraphx:${TAG}.${DATESTAMP}.log
 
-docker build -f ort-migraphx-dev -t ort-migraphx:${TAG} \
+docker build -f ort-migraphx-dev-20.04 -t ort-migraphx:${TAG} \
        --build-arg base_docker=migraphx:${TAG} \
        . 2>&1 | tee ort-migraphx:${TAG}.${DATESTAMP}.log
