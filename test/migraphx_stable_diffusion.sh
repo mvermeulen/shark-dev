@@ -2,6 +2,11 @@
 #
 # Expects to run in the MIGraphX root directory.
 #
+if [ ! -d examples/diffusion/python_stable_diffusion_21 ]; then
+    "stable diffusion not found, are you in a MIGRaphX root directory?"
+    exit 0
+fi
+
 cd examples/diffusion/python_stable_diffusion_21
 
 # set up python environment
