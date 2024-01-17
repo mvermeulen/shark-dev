@@ -1,5 +1,5 @@
 # Basic MIGraphX development building from source
-ARG base_docker="rocm-dev:5.7.2"
+ARG base_docker="rocm:6.0"
 FROM ${base_docker}
 
 RUN apt install -y libtbb2

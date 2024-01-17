@@ -1,5 +1,5 @@
 # Basic SHARK environment
-ARG base_docker="rocm-dev:5.7.2"
+ARG base_docker="rocm:6.0"
 FROM ${base_docker}
 
 ARG shark_repository="https://github.com/nod-ai/SHARK"
@@ -11,7 +11,7 @@ ADD huggingface /root/.cache/huggingface
 ADD torch /root/.cache/torch
 
 # Set up SHARK
-RUN apt install -y python3.11 python3.11-venv curl vulkan-tools
+RUN apt install -y curl vulkan-tools
 COPY scripts/build_shark.sh /workdir/build_shark.sh
 RUN SHARK_REPOSITORY=${shark_repository} SHARK_BRANCH=${shark_branch} /workdir/build_shark.sh
 

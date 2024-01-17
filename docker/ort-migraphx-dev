@@ -1,5 +1,5 @@
 # Base ONNX runtime package built on top of MIGraphX
-ARG base_docker="migraphx:5.7.2"
+ARG base_docker="migraphx:6.0"
 FROM ${base_docker}
 
 # Set up SHARK for benchmarks
