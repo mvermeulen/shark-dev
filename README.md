@@ -1,3 +1,3 @@
 # shark-dev
 
-Repository for experiments related to nod-ai SHARK
+Repository for experiments related to nod-ai SHARK including comparisons.

@@ -1,0 +1,3 @@
+- Add perf script to run SD2.1 for MIGraphX
+- Add perf script to run SD2.1 for SHARK
+- Add perf script to run transformers (bert-large-uncased, bert-base-cased) for MIGraphX & comparison
