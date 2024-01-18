@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Work around the pinned version of SHARK issue.
+# Work around the pinned version of SHARK issue (note this also seems to require ROCm 5.7)
 # Run this first and then retry the setup_venv.sh script.
 # Switch to python3.11 to do the pip install
 update-alternatives --set python3 /usr/bin/python3.11
