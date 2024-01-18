@@ -5,11 +5,6 @@ FROM ${base_docker}
 ARG shark_repository="https://github.com/nod-ai/SHARK"
 ARG shark_branch="SHARK-1.0"
 
-# Copy in tank of previous models
-ADD shark_tank /root/.local/shark_tank
-ADD huggingface /root/.cache/huggingface
-ADD torch /root/.cache/torch
-
 # Set up SHARK
 RUN apt install -y curl vulkan-tools
 COPY scripts/build_shark.sh /workdir/build_shark.sh
