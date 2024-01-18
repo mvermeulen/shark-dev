@@ -1,5 +1,5 @@
 #!/bin/bash
-ROCM_VERSION=${ROCM_VERSION:="5.7"}
+ROCM_VERSION=${ROCM_VERSION:="6.0"}
 
 # Set to "--no-cache" to rebuild the world
 CACHE=${CACHE:=""}
