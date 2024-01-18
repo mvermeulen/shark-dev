@@ -3,7 +3,7 @@
 # Build MIGraphX from source
 INSTALLDIR=${INSTALLDIR:="/src"}
 WORKDIR=${WORKDIR:="/workdir"}
-GPU_TARGETS=${GPU_TARGETS:="gfx906;gfx1030"}
+GPU_TARGETS=${GPU_TARGETS:="gfx906;gfx1030;gfx1100;gfx940"}
 
 CMAKE_VERSION=3.26.6
 cd /usr/local && \
