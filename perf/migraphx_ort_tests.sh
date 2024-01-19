@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 ORT_REPO=${ORT_REPO:="/src/onnxruntime"}
 TEST_RESULTS=${TEST_RESULTS:="/workdir/test_results"}
 DATESTAMP=`date '+%Y%m%d-%H%M'`
@@ -19,16 +20,20 @@ tensorflow_options="-g -o no_opt -e tensorflow"
 
 ENGINES=('rocm' 'migraphx' 'cpu' 'torch' 'torch2' 'torchscript' 'tensorflow')
 ENGINE_OPTIONS=(
-    "$rocm_options",
-    "$migraphx_options",
-    "$cpu_options",
-    "$torch_options",
-    "$torch2_options",
-    "$torchscript_options",
+    "$rocm_options"
+    "$migraphx_options"
+    "$cpu_options"
+    "$torch_options"
+    "$torch2_options"
+    "$torchscript_options"
     "$tensorflow_options")
 
 while read model batch sequence precision
 do
+    for index in "${!ENGINES[@]}"
+    do
+	
+	engine=${ENGINES[$index]}
 	options=${ENGINE_OPTIONS[$index]}
 	echo "*** python3 benchmark.py $options -m $model --batch_sizes $batch --sequence_length $sequence -p $precision"
 	python3 $testscriptdir/benchmark.py $options -m $model --batch_sizes $batch --sequence_length $sequence -p $precision --result_csv summary.csv --detail_csv detail.csv 1>>${engine}.out 2>>${engine}.err
