@@ -1,0 +1,14 @@
+# Base ONNX runtime package built on top of MIGraphX
+ARG base_docker="cuda:cuda-12.2"
+FROM ${base_docker}
+
+# Set up SHARK for benchmarks
+RUN apt install -y python3.11 python3.11-venv
+COPY scripts/build_shark.sh /workdir/build_shark.sh
+RUN /workdir/build_shark.sh
+
+# Set up and build ORT environment
+COPY scripts/build_ort_cuda.sh /workdir/build_ort_cuda.sh
+RUN /workdir/build_ort_cuda.sh
+
+RUN pip3 install tensorflow-gpu
