@@ -21,6 +21,7 @@ ENGINES=('rocm' 'migraphx' 'cpu' 'torch' 'torch2' 'torchscript' 'tensorflow')
 ENGINE_OPTIONS=(
     "$rocm_options",
     "$migraphx_options",
+    "$cpu_options",
     "$torch_options",
     "$torch2_options",
     "$torchscript_options",
@@ -28,32 +29,6 @@ ENGINE_OPTIONS=(
 
 while read model batch sequence precision
 do
-    for index in "${!ENGINES[@]}"
-    do
-	engine=${ENGINES[$index]}
-	case $engine in
-	    rocm)
-		options=$rocm_options
-		;;
-	    migraphx)
-		options=$migraphx_options
-		;;
-	    cpu)
-		options=$cpu_options
-		;;
-	    torch)
-		options=$torch_options
-		;;
-	    torch2)
-		options=$torch2_options
-		;;
-	    torchscript)
-		options=$torchscript_options
-		;;
-	    tensorflow)
-		options=$tensorflow_options
-		;;
-	esac
 	options=${ENGINE_OPTIONS[$index]}
 	echo "*** python3 benchmark.py $options -m $model --batch_sizes $batch --sequence_length $sequence -p $precision"
 	python3 $testscriptdir/benchmark.py $options -m $model --batch_sizes $batch --sequence_length $sequence -p $precision --result_csv summary.csv --detail_csv detail.csv 1>>${engine}.out 2>>${engine}.err
