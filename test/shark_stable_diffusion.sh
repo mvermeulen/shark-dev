@@ -6,4 +6,4 @@ if [ ! -f apps/stable_diffusion/scripts/main.py ]; then
     exit 0
 fi
 
-python apps/stable_diffusion/scripts/main.py --app=txt2img --precision=fp16 --device=vulkan --prompt="a photograph of an astronaut riding a horse" --seed 13
+python apps/stable_diffusion/scripts/main.py --app=txt2img --precision=fp16 --device=rocm --prompt="a photograph of an astronaut riding a horse" --seed 13
