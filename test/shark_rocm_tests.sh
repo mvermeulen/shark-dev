@@ -1,6 +1,7 @@
 #!/bin/bash
 if [ ! -f tank/test_models.py ]; then
-    "tank/test_models.py not found, are you in the SHARK root directory?"
+    echo "tank/test_models.py not found, are you in the SHARK root directory?"
+    exit 1
 fi
 
 if [ "$VIRTUAL_ENV" = "" ]; then
