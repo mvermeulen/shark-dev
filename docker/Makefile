@@ -4,7 +4,7 @@ all:	rocm
 
 rocm:	tags/ort-migraphx-6.0 tags/ort-migraphx-5.7 tags/shark-5.7 tags/shark-6.0
 
-cuda:	tags/shark-cuda-12 tags/ort-cuda-12 tags/cuda-11
+cuda:	tags/shark-cuda-12 tags/ort-cuda-12 tags/cuda-11 tags/tensorrt-12
 
 tags/rocm-6.0: rocm-dev
 	docker build --no-cache -f rocm-dev -t rocm:6.0 . 2>&1 | tee logs/rocm-6.0.txt
@@ -77,3 +77,7 @@ tags/ort-cuda-11:	tags/cuda-11 ort-cuda-dev
 	docker build -f ort-cuda-dev -t ort-cuda:11 \
 	--build-arg base_docker=cuda:11 . 2>&1 | tee logs/ort-cuda-11.txt
 	./check_docker.sh ort-cuda:11 tags/ort-cuda-11
+
+tags/tensorrt-12:
+	docker pull nvcr.io/nvidia/tensorrt:23.12-py3
+	./check_docker.sh nvcr.io/nvidia/tensorrt:23.12-py3 tags/ort-tensorrt-12
