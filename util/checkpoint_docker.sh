@@ -2,7 +2,7 @@
 #
 # Uses tags to save docker images on a particular day
 
-if [ `id -u` !- 0 ]; then
+if [ `id -u` != 0 ]; then
     echo "script should be run as root"
     exit 0
 fi
