@@ -5,6 +5,7 @@ FROM ${base_docker}
 
 # default to 6.0, but allow it to be updated as an argument.
 ARG install_script="https://repo.radeon.com/amdgpu-install/6.0/ubuntu/jammy/amdgpu-install_6.0.60000-1_all.deb"
+ARG vulkan=amdvlk
 
 ENV PATH=/opt/rocm/llvm/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/sbin:/bin
 ENV DEBIAN_FRONTEND=noninteractive
@@ -29,7 +30,7 @@ RUN wget ${install_script}
 
 RUN apt install -y ./`basename ${install_script}`
 # RUN amdgpu-install --vulkan=pro --usecase=rocmdev,graphics,mlsdk --accept-eula --no-dkms
-RUN amdgpu-install --usecase=rocmdev,graphics,mlsdk --accept-eula --no-dkms
+RUN amdgpu-install --usecase=rocmdev,graphics,mlsdk --vulkan=${vulkan} --accept-eula --no-dkms
 
 # ROCm packages installed after repository is set up
 RUN apt install -y half
