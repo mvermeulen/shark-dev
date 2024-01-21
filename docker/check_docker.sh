@@ -14,10 +14,10 @@ if [ "$1" = "" -o "$2" = "" ]; then
     exit -1
 fi
 
-if [ `docker images | grep -q $1` ]; then
+if $(docker images | awk '{ print $1 ":" $2 }' | grep -q $1); then
     touch $2
     exit 0
-else
+else    
     echo docker $1 not found
     exit 1
 fi
