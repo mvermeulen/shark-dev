@@ -4,7 +4,7 @@ all:	rocm
 
 rocm:	tags/ort-migraphx-6.0 tags/ort-migraphx-5.7 tags/shark-5.7 tags/shark-6.0
 
-cuda:	tags/shark-cuda-12
+cuda:	tags/shark-cuda-12 tags/ort-cuda-12
 
 tags/rocm-6.0: rocm-dev
 	docker build --no-cache -f rocm-dev -t rocm:6.0 . 2>&1 | tee logs/rocm-6.0.txt
@@ -56,3 +56,8 @@ tags/shark-cuda-12:	tags/cuda-12 shark-dev
 	docker build -f shark-dev -t shark:12 \
 	--build-arg base_docker=cuda:12 . 2>&1 | tee logs/shark-cuda-12.txt
 	./check_docker.sh shark:12 tags/shark-cuda-12
+
+tags/ort-cuda-12:	tags/cuda-12 ort-cuda-dev
+	docker build -f ort-cuda-dev -t ort-cuda:12 \
+	--build-arg base_docker=cuda:12 . 2>&1 | tee logs/ort-cuda-12.txt
+	./check_docker.sh ort-cuda:12 tags/ort-cuda-12
