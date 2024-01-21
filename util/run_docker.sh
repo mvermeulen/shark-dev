@@ -26,4 +26,8 @@ if [ -d /home/mev/source/shark-dev/cache/pip ]; then
     CACHE="$CACHE -v /home/mev/source/shark-dev/cache/pip:/root/.cache/pip"
 fi
 
+if [ -d /home/mev/source/shark-dev/cache/onnx ]; then
+    CACHE="$CACHE -v /home/mev/source/shark-dev/cache/onnx:/root/.cache/onnx"
+fi
+
 docker run -it -e TZ=America/Chicago $CACHE --device=/dev/dri --device=/dev/kfd --network=host --group-add=video -v /home/mev:/home/mev $DOCKER /bin/bash
