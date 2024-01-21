@@ -46,7 +46,7 @@ elif [ "$ROCM_VERSION" = "5.7" ]; then
 elif [ "$ROCM_VERSION" != "" ]; then
     echo "unknown rocm version, tensorflow-rocm is not installed"
 elif [ "$CUDA_VERSION" != "" ]; then
-    pip3 install tensorflow-gpu
+    pip3 install tensorflow
 else
     echo "no CUDA_VERSION and no ROCM_VERSION is found"
 fi
