@@ -14,7 +14,7 @@ if [ $(dpkg -l rocm-core | grep -c rocm-core) != 0 ]; then
 elif [ -d /usr/local/cuda-12.2 ]; then
     ROCM_VERSION=""
     CUDA_VERSION="12.2"
-    device_opts="--use_cuda --cuda_version=${CUDA_VERSION} --cuda_home=/usr/local/cuda-12.2"
+    device_opts="--use_cuda --cuda_version=${CUDA_VERSION} --cuda_home=/usr/local/cuda-12.2 --cudnn_home=/usr/lib/x86_64-linux-gnu/"
 elif [ -d /usr/local/cuda-11.8 ]; then
     ROCM_VERSION=""
     CUDA_VERSION="11.8"
