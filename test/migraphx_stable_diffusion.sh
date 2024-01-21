@@ -10,7 +10,7 @@ fi
 cd examples/diffusion/python_stable_diffusion_21
 
 # Create a cached environment for the ONNX files
-if [ -d /root/.cache/onnx && ! -d models ]; then
+if [ -d /root/.cache/onnx -a ! -d models ]; then
     mkdir -p /root/.cache/onnx/migx_stable_diffusion
     ln -s /root/.cache/onnx/migx_stable_diffusion/models
 fi
