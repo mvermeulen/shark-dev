@@ -1,41 +1,25 @@
 #!/bin/bash
-ROCM_VERSION=${ROCM_VERSION:="6.0"}
+#
+# Updated to use the Makefile
+# Hard coded to assume ROCm 5.7, ROCm 6.0 and CUDA 12 for now.
 
-# Set to "--no-cache" to rebuild the world
-CACHE=${CACHE:=""}
+if [ ! -d tags ]; then
+    echo "tags not found, expect to run in the shark-dev/docker directory"
+    exit 1
+fi
 
-# NOTE: SHARK-1.0 requires ROCm 5.7.
-#       MIGraphX can use ROCm 6.0
-case $ROCM_VERSION in
-    5.7)
-	TAG=${TAG:="5.7"}
-	INSTALL_SCRIPT="https://repo.radeon.com/amdgpu-install/5.7.1/ubuntu/jammy/amdgpu-install_5.7.50701-1_all.deb"
-	 ;;
-    6.0)
-	TAG=${TAG:="6.0"}
-	INSTALL_SCRIPT="https://repo.radeon.com/amdgpu-install/6.0/ubuntu/jammy/amdgpu-install_6.0.60000-1_all.deb"
-	 ;;
-esac
+if [ -d /opt/rocm ]; then
+    if [ -f tags/rocm5.7 ]; then
+	rm tags/rocm5.7
+    fi    
+    if [ -f tags/rocm6.0 ]; then
+	rm tags/rocm6.0
+    fi
+    make rocm
+elif [ -d /usr/local/cuda ]; then
+    if [ -f tags/cuda-12 ]; then
+	rm tags/cuda-12
+    fi
+    make cuda
+fi
 
-
-DATESTAMP=`date '+%Y%m%d-%H%M'`
-
-docker build -f rocm-dev -t rocm:${TAG} ${CACHE}\
-       --build-arg install_script=${INSTALL_SCRIPT} \
-       . 2>&1 | tee rocm:${TAG}.${DATESTAMP}.log
-docker tag rocm:${TAG} rocm:${DATESTAMP}
-
-docker build -f shark-dev -t shark:${TAG} ${CACHE}\
-       --build-arg base_docker=rocm:${TAG} \
-       . 2>&1 | tee shark:${TAG}.${DATESTAMP}.log
-docker tag shark:${TAG} shark:${DATESTAMP}
-
-docker build -f migraphx-dev -t migraphx:${TAG} ${CACHE}\
-       --build-arg base_docker=rocm:${TAG} \
-       . 2>&1 | tee migraphx:${TAG}.${DATESTAMP}.log
-docker tag migraphx:${TAG} migraphx:${DATESTAMP}
-
-docker build -f ort-migraphx-dev -t ort-migraphx:${TAG} ${CACHE}\
-       --build-arg base_docker=migraphx:${TAG} \
-       . 2>&1 | tee ort-migraphx:${TAG}.${DATESTAMP}.log
-docker tag ort-migraphx:${TAG} ort-migraphx:${DATESTAMP}
