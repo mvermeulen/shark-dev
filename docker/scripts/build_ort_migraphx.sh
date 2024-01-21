@@ -15,6 +15,10 @@ elif [ -d /usr/local/cuda-12.2 ]; then
     ROCM_VERSION=""
     CUDA_VERSION="12.2"
     device_opts="--use_cuda --cuda_version=${CUDA_VERSION} --cuda_home=/usr/local/cuda-12.2"
+elif [ -d /usr/local/cuda-11.8 ]; then
+    ROCM_VERSION=""
+    CUDA_VERSION="11.8"
+    device_opts="--use_cuda --cuda_version=${CUDA_VERSION} --cuda_home=/usr/local/cuda-11.8"
 fi
 
 pip3 install packaging
