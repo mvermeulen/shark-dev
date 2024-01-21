@@ -11,10 +11,17 @@ if [ $(dpkg -l rocm-core | grep -c rocm-core) != 0 ]; then
     ROCM_VERSION=`dpkg -l rocm-core | awk '{ print $3 }' | awk -F. '{ print $1 "." $2 }'`
     CUDA_VERSION=""
     device_opts="--use-migraphx --use_rocm --rocm_version=${ROCM_VERSION} --rocm_home=/opt/rocm"
+elif [ -d /usr/local/cuda-12.3 ]; then
+    ROCM_VERSION=""
+    CUDA_VERSION="12.3"
+    device_opts="--use_cuda --cuda_version=${CUDA_VERSION} --cuda_home=/usr/local/cuda-12.3 --cudnn_home=/usr/lib/x86_64-linux-gnu/"
+    if [ -d /opt/tensorrt ]; then
+	device_opts="$device_opts --use_tensorrt --tensorrt_home=/usr/lib/x86_64-linux-gnu"
+    fi
 elif [ -d /usr/local/cuda-12.2 ]; then
     ROCM_VERSION=""
     CUDA_VERSION="12.2"
-    device_opts="--use_cuda --cuda_version=${CUDA_VERSION} --cuda_home=/usr/local/cuda-12.2 --cudnn_home=/usr/lib/x86_64-linux-gnu/"
+    device_opts="--use_cuda --cuda_version=${CUDA_VERSION} --cuda_home=/usr/local/cuda-12.2 --cudnn_home=/usr/lib/x86_64-linux-gnu/"    
 elif [ -d /usr/local/cuda-11.8 ]; then
     ROCM_VERSION=""
     CUDA_VERSION="11.8"
