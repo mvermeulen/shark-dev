@@ -1,6 +1,10 @@
 # Makefile approach to keeping docker dependencies built and up to date.
 #
-all:	tags/ort-migraphx-6.0 tags/ort-migraphx-5.7 tags/shark-5.7 tags/shark-6.0
+all:	rocm
+
+rocm:	tags/ort-migraphx-6.0 tags/ort-migraphx-5.7 tags/shark-5.7 tags/shark-6.0
+
+cuda:	tags/shark-cuda-12
 
 tags/rocm-6.0: rocm-dev
 	docker build --no-cache -f rocm-dev -t rocm:6.0 . 2>&1 | tee logs/rocm-6.0.txt
@@ -41,3 +45,14 @@ tags/ort-migraphx-5.7: tags/migraphx-5.7 ort-migraphx-dev
 	docker build --no-cache -f ort-migraphx-dev -t ort-migraphx:5.7 \
 	--build-arg base_docker=migraphx:5.7 . 2>&1 | tee logs/ort-migraphx-5.7.txt
 	./check_docker.sh ort-migraphx:5.7 tags/ort-migraphx-5.7
+
+tags/cuda-12: cuda-dev
+	docker build -f cuda-dev -t cuda:12 \
+        --build-arg base_docker="nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04" \
+	. 2>&1 | tee logs/cuda-12.txt
+	./check_docker.sh cuda:12 tags/cuda-12
+
+tags/shark-cuda-12:	tags/cuda-12 shark-dev
+	docker build -f shark-dev -t shark:12 \
+	--build-arg base_docker=cuda:12 . 2>&1 | tee logs/shark-cuda-12.txt
+	./check_docker.sh shark:12 tags/shark-cuda-12
