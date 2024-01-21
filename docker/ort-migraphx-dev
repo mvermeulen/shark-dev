@@ -10,5 +10,3 @@ RUN /workdir/build_shark.sh
 # Set up MIGraphX and ORT environment
 COPY scripts/build_ort_migraphx.sh /workdir/build_ort_migraphx.sh
 RUN /workdir/build_ort_migraphx.sh
-
-RUN pip3 install tensorflow-rocm
