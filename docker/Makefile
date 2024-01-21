@@ -1,6 +1,6 @@
 # Makefile approach to keeping docker dependencies built and up to date.
 #
-all:	tags/ort-migraphx-6.0 tags/ort-migraphx-5.7
+all:	tags/ort-migraphx-6.0 tags/ort-migraphx-5.7 tags/shark-5.7 tags/shark-6.0
 
 tags/rocm-6.0: rocm-dev
 	docker build --no-cache -f rocm-dev -t rocm:6.0 . 2>&1 | tee logs/rocm-6.0.txt
