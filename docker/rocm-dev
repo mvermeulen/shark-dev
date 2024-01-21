@@ -34,3 +34,5 @@ RUN amdgpu-install --usecase=rocmdev,graphics,mlsdk --accept-eula --no-dkms
 # ROCm packages installed after repository is set up
 RUN apt install -y half
 
+# Copy in my test scripts and repository
+RUN mkdir -p /src && cd /src && git clone --depth=1 https://github.com/mvermeulen/shark-dev

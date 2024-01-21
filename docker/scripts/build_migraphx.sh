@@ -11,10 +11,7 @@ cd /usr/local && \
 export PATH=/usr/local/cmake-${CMAKE_VERSION}-linux-x86_64/bin:$PATH
 
 pip3 install https://github.com/RadeonOpenCompute/rbuild/archive/master.tar.gz
-mkdir -p ${INSTALLDIR}
-cd ${INSTALLDIR}
-git clone --depth=1 https://github.com/ROCm/AMDMIGraphX
-cd AMDMIGraphX
+cd /src/AMDMIGraphX
 rbuild package --cxx /opt/rocm/llvm/bin/clang++ -d ${INSTALLDIR}/AMDMIGraphX/depend -B ${INSTALLDIR}/AMDMIGraphX/build -DGPU_TARGETS=${GPU_TARGETS}
 cd build
 dpkg -i *.deb

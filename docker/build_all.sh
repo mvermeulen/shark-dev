@@ -27,7 +27,7 @@ docker tag rocm:${TAG} rocm:${DATESTAMP}
 
 docker build -f shark-dev -t shark:${TAG} ${CACHE}\
        --build-arg base_docker=rocm:${TAG} \
-       . 2>&1 | tee shark.${TAG}.${DATESTAMP}.log
+       . 2>&1 | tee shark:${TAG}.${DATESTAMP}.log
 docker tag shark:${TAG} shark:${DATESTAMP}
 
 docker build -f migraphx-dev -t migraphx:${TAG} ${CACHE}\

@@ -3,6 +3,7 @@ ARG base_docker="rocm:6.0"
 FROM ${base_docker}
 
 RUN apt install -y libtbb2
+RUN mkdir -p /src && cd /src && git clone --depth=1 https://github.com/ROCm/AMDMIGraphX
 
 COPY scripts/build_migraphx.sh /workdir/build_migraphx.sh
 RUN /workdir/build_migraphx.sh
