@@ -6,6 +6,19 @@ DOCKER=${DOCKER:="ort-migraphx:6.0"}
 PRIVILEGED=${PRIVILEGED:=""} # pass in --privileged if needed
 CACHE=""
 
+rocm_opts="--device=/dev/dri --device=/dev/kfd --network=host --group-add=render"
+cuda_opts="--gpus all"
+
+# Use the installed directories as a clue, not perfect but close to what is needed
+if [ -d /opt/rocm ]; then
+    device_opts=$rocm_opts
+elif [ -d /usr/local/cuda ]; then
+    device_opts=$cuda_opts
+else
+    device_opts=""
+fi
+
+
 if [ `id -u` != 0 ]; then
     echo script should be run as root
     exit 0
@@ -35,4 +48,4 @@ if [ -d /home/mev/source/shark-dev/results ]; then
     CACHE="$CACHE -v /home/mev/source/shark-dev/results:/workdir/test_results"
 fi
 
-docker run -it -e TZ=America/Chicago $CACHE $PRIVILEDGED --device=/dev/dri --device=/dev/kfd --network=host --group-add=video -v /home/mev:/home/mev $DOCKER /bin/bash
+docker run -it -e TZ=America/Chicago $CACHE $PRIVILEDGED $device_opts -v /home/mev:/home/mev $DOCKER /bin/bash
