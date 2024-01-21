@@ -11,6 +11,7 @@ cd $testdir
 testscriptdir=${ORT_REPO}/onnxruntime/python/tools/transformers
 
 rocm_options="-g -e onnxruntime --provider rocm"
+cuda_options="-g -e onnxruntime --provider cuda"
 migraphx_options="-g -e onnxruntime --provider migraphx --disable_gelu --disable_layer_norm --disable_attention --disable_skip_layer_norm --disable_embed_layer_norm --disable_bias_skip_layer_norm --disable_bias_gelu"
 cpu_options="-e onnxruntime --provider cpu"
 torch_options="-g -o no_opt -e torch"
@@ -18,15 +19,26 @@ torch2_options="-g -o no_opt -e torch2"
 torchscript_options="-g -o no_opt -e torchscript"
 tensorflow_options="-g -o no_opt -e tensorflow"
 
-ENGINES=('rocm' 'migraphx' 'cpu' 'torch' 'torch2' 'torchscript' 'tensorflow')
-ENGINE_OPTIONS=(
-    "$rocm_options"
-    "$migraphx_options"
-    "$cpu_options"
-    "$torch_options"
-    "$torch2_options"
-    "$torchscript_options"
-    "$tensorflow_options")
+if [ -d /opt/rocm ]; then
+    ENGINES=('rocm' 'migraphx' 'cpu' 'torch' 'torch2' 'torchscript' 'tensorflow')
+    ENGINE_OPTIONS=(
+	"$rocm_options"
+	"$migraphx_options"
+	"$cpu_options"
+	"$torch_options"
+	"$torch2_options"
+	"$torchscript_options"
+	"$tensorflow_options")
+elif [ -d /usr/local/cuda ]; then
+    ENGINES=('cuda' 'cpu' 'torch' 'torch2' 'torchscript' 'tensorflow')
+    ENGINE_OPTIONS=(
+	"$cuda_options"
+	"$cpu_options"
+	"$torch_options"
+	"$torch2_options"
+	"$torchscript_options"
+	"$tensorflow_options")    
+fi
 
 while read model batch sequence precision
 do
