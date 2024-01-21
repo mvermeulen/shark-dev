@@ -6,6 +6,11 @@ if [ ! -f apps/stable_diffusion/scripts/main.py ]; then
     exit 0
 fi
 
+if [ "$VIRTUAL_ENV" = "" ]; then
+    echo "VIRTUAL_ENV is empty have you done source shark1.venv/bin/activate?"
+    exit 1
+fi
+
 if [ -d /opt/rocm ]; then
     DEVICE=rocm
 elif [ -d /usr/local/cuda ]; then

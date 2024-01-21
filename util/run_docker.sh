@@ -3,6 +3,7 @@
 # Script pass the right parameters to run docker on ROCm
 # includes mounting /home/mev
 DOCKER=${DOCKER:="ort-migraphx:6.0"}
+PRIVILEGED=${PRIVILEGED:=""} # pass in --privileged if needed
 CACHE=""
 
 if [ `id -u` != 0 ]; then
@@ -30,4 +31,4 @@ if [ -d /home/mev/source/shark-dev/cache/onnx ]; then
     CACHE="$CACHE -v /home/mev/source/shark-dev/cache/onnx:/root/.cache/onnx"
 fi
 
-docker run -it -e TZ=America/Chicago $CACHE --device=/dev/dri --device=/dev/kfd --network=host --group-add=video -v /home/mev:/home/mev $DOCKER /bin/bash
+docker run -it -e TZ=America/Chicago $CACHE $PRIVILEDGED --device=/dev/dri --device=/dev/kfd --network=host --group-add=video -v /home/mev:/home/mev $DOCKER /bin/bash

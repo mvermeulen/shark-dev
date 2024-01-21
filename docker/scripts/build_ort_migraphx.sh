@@ -26,4 +26,8 @@ cd /src/onnxruntime/onnxruntime/python/tools/transformers
 pip3 install -r requirements.txt
 pip3 uninstall -y torch
 pip3 install torch --index-url https://download.pytorch.org/whl/nightly/rocm5.7
-pip3 install tensorflow-rocm
+if [ "$ROCM_VERSION" = "6.0" ]; then
+    pip3 install tensorflow-rocm==2.13.1.600
+else
+    pip3 install tensorflow-rocm==2.13.0.570
+fi
