@@ -4,7 +4,7 @@ all:	rocm
 
 rocm:	tags/ort-migraphx-6.0 tags/ort-migraphx-5.7 tags/shark-5.7 tags/shark-6.0
 
-cuda:	tags/shark-cuda-12.2 tags/ort-cuda-12.2 tags/cuda-11.8 tags/ort-tensorrt-12.2
+cuda:	tags/shark-cuda-12.2 tags/ort-cuda-12.2 tags/cuda-11.8 tags/ort-tensorrt-12.3
 
 tags/rocm-6.0: rocm-dev
 	docker build --no-cache -f rocm-dev -t rocm:6.0 . 2>&1 | tee logs/rocm-6.0.txt
