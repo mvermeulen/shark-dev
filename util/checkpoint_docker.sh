@@ -15,4 +15,9 @@ if [ -d /opt/rocm ]; then
 	docker tag $dockerid $dockerid-${datestamp}
     done
 elif [ -d /usr/local/cuda ]; then
-    for dockerid in cuda:11 cuda:12 shark:11 shark:12 ort-cuda:11 ort-cuda:12 tensorrt:12 ort-tensorrt:12 
+    for dockerid in cuda:11 cuda:12 shark:11 shark:12 ort-cuda:11 ort-cuda:12 tensorrt:12 ort-tensorrt:12
+    do
+	docker tag $dockerid $dockerid-${datestamp}
+    done
+fi
+
