@@ -10,7 +10,7 @@ WORKDIR=${WORKDIR:="/workdir"}
 if [ $(dpkg -l rocm-core | grep -c rocm-core) != 0 ]; then
     ROCM_VERSION=`dpkg -l rocm-core | awk '{ print $3 }' | awk -F. '{ print $1 "." $2 }'`
     CUDA_VERSION=""
-    device_opts="--use-migraphx --use_rocm --rocm_version=${ROCM_VERSION} --rocm_home=/opt/rocm"
+    device_opts="--use_migraphx --use_rocm --rocm_version=${ROCM_VERSION} --rocm_home=/opt/rocm"
 elif [ -d /usr/local/cuda-12.3 ]; then
     ROCM_VERSION=""
     CUDA_VERSION="12.3"
