@@ -62,7 +62,7 @@ elif [ "$ROCM_VERSION" != "" ]; then
 elif [ "$CUDA_VERSION" = "12.2" ]; then
     pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu121
     pip3 install tensorflow
-elif [ "$CUDA_VERSION = "11.8" ]; then
+elif [ "$CUDA_VERSION" = "11.8" ]; then
     pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
     pip3 install tensorflow    
 elif [ "$CUDA_VERSION" != "" ]; then
