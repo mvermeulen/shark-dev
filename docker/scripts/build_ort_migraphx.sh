@@ -51,11 +51,20 @@ pip3 install -r requirements.txt
 pip3 uninstall -y torch
 pip3 install torch --index-url https://download.pytorch.org/whl/nightly/rocm5.7
 if [ "$ROCM_VERSION" = "6.0" ]; then
+    # 6.0 not available yet...
+    pip3 install torch --index-url https://download.pytorch.org/whl/nightly/rocm5.7    
     pip3 install tensorflow-rocm==2.13.1.600
 elif [ "$ROCM_VERSION" = "5.7" ]; then
+    pip3 install torch --index-url https://download.pytorch.org/whl/nightly/rocm5.7    
     pip3 install tensorflow-rocm==2.13.0.570
 elif [ "$ROCM_VERSION" != "" ]; then
     echo "unknown rocm version, tensorflow-rocm is not installed"
+elif [ "$CUDA_VERSION" = "12.2" ]; then
+    pip3 install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu121
+    pip3 install tensorflow
+elif [ "$CUDA_VERSION = "11.8" ]; then
+    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+    pip3 install tensorflow    
 elif [ "$CUDA_VERSION" != "" ]; then
     pip3 install tensorflow
 else
