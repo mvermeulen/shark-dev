@@ -49,7 +49,7 @@ pip3 install /src/onnxruntime/build/Linux/Release/dist/*.whl
 cd /src/onnxruntime/onnxruntime/python/tools/transformers
 pip3 install -r requirements.txt
 pip3 uninstall -y torch
-pip3 install torch --index-url https://download.pytorch.org/whl/nightly/rocm5.7
+
 if [ "$ROCM_VERSION" = "6.0" ]; then
     # 6.0 not available yet...
     pip3 install torch --index-url https://download.pytorch.org/whl/nightly/rocm5.7    
