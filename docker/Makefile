@@ -87,3 +87,8 @@ tags/ort-tensorrt-12.3: tags/tensorrt-12.3 ort-cuda-dev
 	docker build -f ort-cuda-dev -t ort-tensorrt:12.3 \
 	--build-arg base_docker=tensorrt:12.3 . 2>&1 | tee logs/ort-tensorrt-12.3.txt
 	./check_docker.sh ort-tensorrt:12.3 tags/ort-tensorrt-12.3
+
+tags/rocm-tvm-6.0:	tvm-dev scripts/build_tvm.sh
+	docker build -f tvm-dev -t rocm-tvm:6.0 \
+	--build-arg base_docker=rocm:6.0 . 2>&1 | tee logs/rocm-tvm-6.0.txt
+	./check_docker.sh rocm-tvm:6.0 tags/rocm-tvm-6.0

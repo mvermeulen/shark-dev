@@ -1,0 +1,8 @@
+# Basic TVM development
+ARG base_docker="rocm:6.0"
+FROM ${base_docker}
+
+RUN mkdir -p /src && cd /src && git clone --depth 1 https://github.com/mvermeulen/tvm
+
+COPY scripts/build_tvm.sh /workdir/build_tvm.sh
+RUN /workdir/build_tvm.sh
