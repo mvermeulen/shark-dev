@@ -26,4 +26,5 @@ cmake -DCMAKE_CXX_FLAGS="-D__HIP_PLATFORM_AMD__"  ..
 make -j 4
 
 cd /src/tvm/python
+pip3 install -U numpy
 python3 setup.py install
