@@ -20,5 +20,10 @@ elif [ -d /usr/local/cuda ]; then
     CONFIG_CMAKE=config.cmake.cuda
 fi
 
-
 sed -e 's?USE_RELAY_DEBUG OFF?USE_RELAY_DEBUG ON?g' -e 's?USE_VULKAN OFF?USE_VULKAN ON?g' $CONFIG_CMAKE > config.cmake
+
+cmake ..
+make -j 4
+
+cd /src/tvm/python
+python3 setup.py install
