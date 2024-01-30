@@ -22,7 +22,7 @@ fi
 
 sed -e 's?USE_RELAY_DEBUG OFF?USE_RELAY_DEBUG ON?g' $CONFIG_CMAKE > config.cmake
 
-cmake -DCMAKE_CXX_FLAGS="__HIP_PLATFORM_AMD__"  ..
+cmake -DCMAKE_CXX_FLAGS="-D__HIP_PLATFORM_AMD__"  ..
 make -j 4
 
 cd /src/tvm/python
