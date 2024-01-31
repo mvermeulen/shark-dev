@@ -90,10 +90,14 @@ tags/ort-tensorrt-12.3: tags/tensorrt-12.3 ort-cuda-dev
 
 tags/rocm-tvm-6.0:	tvm-dev scripts/build_tvm.sh
 	docker build --no-cache -f tvm-dev -t rocm-tvm:6.0 \
+	--build-arg tvm_repo="https://github.com/mvermeulen/tvm" \
+	--build-arg tvm-branch="rocm-6.0-test" \
 	--build-arg base_docker=rocm:6.0 . 2>&1 | tee logs/rocm-tvm-6.0.txt
 	./check_docker.sh rocm-tvm:6.0 tags/rocm-tvm-6.0
 
 tags/cuda-tvm-12.2: tvm-dev tags/cuda-12.2
 	docker build --no-cache -f tvm-dev -t cuda-tvm:12.2 \
+	--build-arg tvm_repo="https://github.com/apache/tvm" \
+	--build-arg tvm_branch="main" \
 	--build-arg base_docker=cuda:12.2 . 2>&1 | tee logs/cuda-tvm-12.2.txt
 	./check_docker.sh cuda-tvm:12.2 tags/cuda-tvm-12.2
