@@ -1,8 +1,11 @@
 # Basic TVM development
 ARG base_docker="rocm:6.0"
+ARG tvm_repo="https://github.com/mvermeulen/tvm"
+ARG tvm_branch="rocm-6.0-test"
+
 FROM ${base_docker}
 
-RUN mkdir -p /src && cd /src && git clone --recursive --branch rocm-6.0-test --depth 1 https://github.com/mvermeulen/tvm
+RUN mkdir -p /src && cd /src && git clone --recursive --branch ${tvm_branch} --depth 1 ${tvm_repo}
 
 COPY scripts/build_tvm.sh /workdir/build_tvm.sh
 RUN /workdir/build_tvm.sh
