@@ -4,7 +4,7 @@ CACHE=--cache
 
 all:	rocm
 
-rocm:	tags/ort-migraphx-6.0 tags/ort-migraphx-5.7 tags/shark-5.7 tags/shark-6.0 tags/mlc-5.7 tags/rocm-conda-5.7
+rocm:	tags/ort-migraphx-6.0 tags/ort-migraphx-5.7 tags/shark-5.7 tags/shark-6.0 tags/mlc-unity-5.7 tags/rocm-conda-5.7
 
 cuda:	tags/shark-cuda-12.2 tags/ort-cuda-11.8 tags/ort-tensorrt-12.3 tags/cuda-tvm-12.2
 
@@ -108,3 +108,7 @@ tags/rocm-conda-5.7:	conda-dev tags/rocm-5.7
 	docker build --no-cache -f conda-dev -t rocm-conda:5.7 \
 	--build-arg base_docker=rocm:5.7 . 2>&1 | tee logs/rocm-conda-5.7.txt
 	./check_docker.sh rocm-conda:5.7 tags/rocm-conda-5.7
+
+tags/mlc-unity-5.7:	mlc-dev tags/rocm-conda-5.7
+	docker build -f mlc-unity -t mlc-unity:5.7 . 2>&1 | tee logs/mlc-unity-5.7.txt
+	./check_docker.sh mlc-unity:5.7 tags/mlc-unity-5.7
