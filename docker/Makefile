@@ -1,12 +1,12 @@
 # Makefile approach to keeping docker dependencies built and up to date.
 #
+CACHE=--cache
+
 all:	rocm
 
-rocm:	tags/ort-migraphx-6.0 tags/ort-migraphx-5.7 tags/shark-5.7 tags/shark-6.0 tags/mlc-5.7
+rocm:	tags/ort-migraphx-6.0 tags/ort-migraphx-5.7 tags/shark-5.7 tags/shark-6.0 tags/mlc-5.7 tags/rocm-conda-5.7
 
 cuda:	tags/shark-cuda-12.2 tags/ort-cuda-11.8 tags/ort-tensorrt-12.3 tags/cuda-tvm-12.2
-
-mlc:	tags/mlc-rocm-5.7
 
 tags/rocm-6.0: rocm-dev
 	docker build --no-cache -f rocm-dev -t rocm:6.0 . 2>&1 | tee logs/rocm-6.0.txt
@@ -104,7 +104,7 @@ tags/cuda-tvm-12.2: tvm-dev tags/cuda-12.2
 	--build-arg base_docker=cuda:12.2 . 2>&1 | tee logs/cuda-tvm-12.2.txt
 	./check_docker.sh cuda-tvm:12.2 tags/cuda-tvm-12.2
 
-tags/mlc-rocm-5.7: mlc-dev tags/mlc-rocm-5.7
-	docker build --no-cache -f mlc-dev -t mlc-rocm:5.7 \
-	--build-arg base_docker=rocm:5.7 . 2>&1 | tee logs/mlc-rocm:5.7.txt
-	./check_docker.sh mlc-rocm:5.7 tags/mlc-rocm-5.7
+tags/rocm-conda-5.7:	conda-dev tags/rocm-5.7
+	docker build --no-cache -f conda-dev -t rocm-conda:5.7 \
+	--build-arg base_docker=rocm:5.7 . 2>&1 | tee logs/rocm-conda-5.7.txt
+	./check_docker.sh rocm-conda:5.7 tags/rocm-conda-5.7
