@@ -9,3 +9,7 @@ RUN mkdir -p /src && cd /src && git clone --recursive --branch ${tvm_branch} --d
 
 COPY scripts/build_tvm.sh /workdir/build_tvm.sh
 RUN /workdir/build_tvm.sh
+
+RUN cd /src && git clone https://github.com/mvermeulen/rocm-tvm
+
+RUN pip3 install pytest onnx

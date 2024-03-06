@@ -1,0 +1,32 @@
+# Dockerfile for building mlc-unity compiler for ROCm 5.7
+ARG base_docker=rocm-conda:5.7
+FROM ${base_docker}
+
+ARG tvm_repo="https://github.com/apache/tvm"
+ARG tvm_branch="main"
+ARG vulkan="yes"
+
+# Assumes Vulkan driver is also installed.
+RUN if [ "${vulkan}" = "yes" ]; then \
+   amdgpu-install --usecase=graphics --vulkan=pro --accept-eula --no-dkms; \
+   fi
+RUN wget -qO- https://packages.lunarg.com/lunarg-signing-key-pub.asc | sudo tee\
+ /etc/apt/trusted.gpg.d/lunarg.asc
+RUN sudo wget -qO /etc/apt/sources.list.d/lunarg-vulkan-jammy.list http://packa\
+ges.lunarg.com/vulkan/lunarg-vulkan-jammy.list
+RUN sudo apt update
+RUN sudo apt install vulkan-sdk
+   
+RUN apt update && apt install -y vulkan-tools
+
+RUN mkdir -p /src && cd /src && git clone --recursive --branch ${tvm_branch} --depth 1 ${tvm_repo}
+
+RUN mkdir -p /src/tvm/build && cd /src/tvm/build && sed -e 's?USE_LLVM_OFF?USE_LLVM /opt/rocm/llvm/bin/llvm-config?g' -e 's?USE_VULKAN OFF?USE_VULKAN ON?g' ../cmake/config.cmake > config.cmake
+
+RUN cd /src/tvm/build && cmake ..
+
+RUN cd /src/tvm/build && make
+
+RUN pip3 install -U numpy
+
+RUN cd /src/tvm/python && python3 setup.py install
