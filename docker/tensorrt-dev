@@ -1,4 +1,4 @@
-ARG base_docker="nvcr.io/nvidia/tensorrt:23.12-py3"
+ARG base_docker="nvcr.io/nvidia/tensorrt:24.02-py3"
 FROM ${base_docker}
 
 ENV DEBIAN_FRONTEND=noninteractive
