@@ -82,7 +82,7 @@ tags/ort-cuda-11.8:	tags/cuda-11.8 ort-cuda-dev
 
 tags/tensorrt-12.3: tensorrt-dev
 	docker build --no-cache -f tensorrt-dev -t tensorrt:12.3 \
-	--build-arg base_docker="nvcr.io/nvidia/tensorrt:23.12-py3" . 2>&1 | tee logs/ort-tensorrt-12.3.txt
+	--build-arg base_docker="nvcr.io/nvidia/tensorrt:24.02-py3" . 2>&1 | tee logs/ort-tensorrt-12.3.txt
 	./check_docker.sh tensorrt:12.3 tags/tensorrt-12.3
 
 tags/ort-tensorrt-12.3: tags/tensorrt-12.3 ort-cuda-dev
