@@ -10,7 +10,7 @@ rocm57:	tags/ort-migraphx-5.7 tags/shark-5.7 tags/rocm-conda-5.7
 
 rocm60:	tags/ort-migraphx-6.0 tags/shark-6.0 tags/rocm-tvm-6.0
 
-rocm61:	tags/rocm-tvm-6.1
+rocm61:	tags/rocm-tvm-6.1 tags/ort-migraphx-6.1
 
 cuda:	tags/shark-cuda-12.2 tags/ort-cuda-11.8 tags/ort-tensorrt-12.3 tags/cuda-tvm-12.2
 
@@ -40,6 +40,11 @@ tags/shark-5.7: tags/rocm-5.7 shark-dev
 	--build-arg base_docker=rocm:5.7 . 2>&1 | tee logs/shark-5.7.txt
 	./check_docker.sh shark:5.7 tags/shark-5.7
 
+tags/migraphx-6.1: tags/rocm-6.1 migraphx-dev
+	docker build --no-cache -f migraphx-dev -t migraphx:6.1 \
+	--build-arg base_docker=rocm:6.1 . 2>&1 | tee logs/migraphx-6.1.txt
+	./check_docker.sh migraphx:6.1 tags/migraphx-6.1
+
 tags/migraphx-6.0: tags/rocm-6.0 migraphx-dev
 	docker build --no-cache -f migraphx-dev -t migraphx:6.0 \
 	--build-arg base_docker=rocm:6.0 . 2>&1 | tee logs/migraphx-6.0.txt
@@ -49,6 +54,11 @@ tags/migraphx-5.7: tags/rocm-5.7 migraphx-dev
 	docker build --no-cache -f migraphx-dev -t migraphx:5.7 \
 	--build-arg base_docker=rocm:5.7 . 2>&1 | tee logs/migraphx-5.7.txt
 	./check_docker.sh migraphx:5.7 tags/migraphx-5.7
+
+tags/ort-migraphx-6.1: tags/migraphx-6.1 ort-migraphx-dev
+	docker build --no-cache -f ort-migraphx-dev -t ort-migraphx:6.1 \
+	--build-arg base_docker=migraphx:6.1 . 2>&1 | tee logs/ort-migraphx-6.1.txt
+	./check_docker.sh ort-migraphx:6.1 tags/ort-migraphx-6.1
 
 tags/ort-migraphx-6.0: tags/migraphx-6.0 ort-migraphx-dev
 	docker build --no-cache -f ort-migraphx-dev -t ort-migraphx:6.0 \
