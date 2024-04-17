@@ -102,7 +102,7 @@ tags/ort-tensorrt-12.3: tags/tensorrt-12.3 ort-cuda-dev
 	--build-arg base_docker=tensorrt:12.3 . 2>&1 | tee logs/ort-tensorrt-12.3.txt
 	./check_docker.sh ort-tensorrt:12.3 tags/ort-tensorrt-12.3
 
-tags/rocm-tvm-6.1:	tvm-dev scripts/build_tvm.sh
+tags/rocm-tvm-6.1:	tvm-dev scripts/build_tvm.sh tags/rocm-6.1
 	docker build --no-cache -f tvm-dev -t rocm-tvm:6.1 \
 	--build-arg tvm_repo="https://github.com/mvermeulen/tvm" \
 	--build-arg tvm-branch="rocm-6.1-test" \
