@@ -33,7 +33,7 @@ RUN amdgpu-install --usecase=rocmdev,graphics,mlsdk ${vulkan} --accept-eula --no
 RUN apt install -y vulkan-tools
 
 # ROCm packages installed after repository is set up
-RUN apt install -y half
+RUN apt install -y half rocm-llvm-dev
 
 # Copy in my test scripts and repository
 RUN mkdir -p /src && cd /src && git clone --depth=1 https://github.com/mvermeulen/shark-dev
