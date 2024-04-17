@@ -4,9 +4,21 @@ CACHE=--cache
 
 all:	rocm
 
-rocm:	tags/ort-migraphx-6.0 tags/ort-migraphx-5.7 tags/shark-5.7 tags/shark-6.0 tags/mlc-unity-5.7 tags/rocm-conda-5.7
+rocm:	rocm61 rocm60 rocm57
+
+rocm57:	tags/ort-migraphx-5.7 tags/shark-5.7 tags/rocm-conda-5.7
+
+rocm60:	tags/ort-migraphx-6.0 tags/shark-6.0 tags/rocm-tvm-6.0
+
+rocm61:	tags/rocm-tvm-6.1
 
 cuda:	tags/shark-cuda-12.2 tags/ort-cuda-11.8 tags/ort-tensorrt-12.3 tags/cuda-tvm-12.2
+
+tags/rocm-6.1: rocm-dev
+	docker build --no-cache -f rocm-dev -t rocm:6.1 \
+	--build-arg install_script="https://repo.radeon.com/amdgpu-install/6.1/ubuntu/jammy/amdgpu-install_6.1.60100-1_all.deb" \
+	. 2>&1 | tee logs/rocm-6.1.txt
+	./check_docker.sh rocm:6.1 tags/rocm-6.1
 
 tags/rocm-6.0: rocm-dev
 	docker build --no-cache -f rocm-dev -t rocm:6.0 . 2>&1 | tee logs/rocm-6.0.txt
@@ -90,10 +102,17 @@ tags/ort-tensorrt-12.3: tags/tensorrt-12.3 ort-cuda-dev
 	--build-arg base_docker=tensorrt:12.3 . 2>&1 | tee logs/ort-tensorrt-12.3.txt
 	./check_docker.sh ort-tensorrt:12.3 tags/ort-tensorrt-12.3
 
+tags/rocm-tvm-6.1:	tvm-dev scripts/build_tvm.sh
+	docker build --no-cache -f tvm-dev -t rocm-tvm:6.1 \
+	--build-arg tvm_repo="https://github.com/mvermeulen/tvm" \
+	--build-arg tvm-branch="rocm-6.1-test" \
+	--build-arg base_docker=rocm:6.1 . 2>&1 | tee logs/rocm-tvm-6.1.txt
+	./check_docker.sh rocm-tvm:6.1 tags/rocm-tvm-6.1
+
 tags/rocm-tvm-6.0:	tvm-dev scripts/build_tvm.sh
 	docker build --no-cache -f tvm-dev -t rocm-tvm:6.0 \
-	--build-arg tvm_repo="https://github.com/mvermeulen/tvm" \
-	--build-arg tvm-branch="rocm-6.0-test" \
+	--build-arg tvm_repo="https://github.com/lhutton1/tvm" \
+	--build-arg tvm-branch="fix-target-load-warning" \
 	--build-arg base_docker=rocm:6.0 . 2>&1 | tee logs/rocm-tvm-6.0.txt
 	./check_docker.sh rocm-tvm:6.0 tags/rocm-tvm-6.0
 

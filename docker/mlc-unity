@@ -29,4 +29,6 @@ RUN cd /src/tvm/build && make
 
 RUN pip3 install -U numpy
 
+RUN conda install -c conda-forge libstdcxx-ng
+
 RUN cd /src/tvm/python && python3 setup.py install

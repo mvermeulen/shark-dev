@@ -3,9 +3,12 @@ ARG base_docker="rocm:6.0"
 
 FROM ${base_docker}
 ARG tvm_repo="https://github.com/mvermeulen/tvm"
-ARG tvm_branch="rocm-6.0-test"
+#ARG tvm_repo="https://github.com/lhutton1/tvm"
+ARG tvm_branch="rocm-6.1-test"
+#ARG tvm_branch="fix-target-load-warning"
 
-RUN mkdir -p /src && cd /src && git clone --recursive --branch ${tvm_branch} --depth 1 ${tvm_repo}
+# RUN mkdir -p /src && cd /src && git clone --recursive --branch ${tvm_branch} --depth 1 ${tvm_repo}
+RUN mkdir -p /src && cd /src && git clone --recursive --branch ${tvm_branch} ${tvm_repo}
 
 COPY scripts/build_tvm.sh /workdir/build_tvm.sh
 RUN /workdir/build_tvm.sh
