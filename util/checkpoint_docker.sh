@@ -10,7 +10,7 @@ fi
 datestamp=`date '+%Y-%m-%d'`
 
 if [ -d /opt/rocm ]; then
-    for dockerid in rocm:5.7 rocm:6.0 shark:5.7 shark:6.0 migraphx:5.7 migraphx:6.0 ort-migraphx:5.7 ort-migraphx:6.0
+    for dockerid in rocm:5.7 rocm:6.0 shark:5.7 shark:6.0 migraphx:5.7 migraphx:6.0 ort-migraphx:5.7 ort-migraphx:6.0 rocm:6.1 migraphx:6.1 rocm-tvm:6.1
     do
 	docker tag $dockerid $dockerid-${datestamp}
     done
