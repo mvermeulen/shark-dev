@@ -10,9 +10,9 @@ rocm57:	tags/ort-migraphx-5.7 tags/shark-5.7 tags/rocm-conda-5.7
 
 rocm60:	tags/ort-migraphx-6.0 tags/shark-6.0 tags/rocm-tvm-6.0
 
-rocm61:	tags/rocm-tvm-6.1 tags/ort-migraphx-6.1
+rocm61:	tags/rocm-tvm-6.1 tags/ort-migraphx-6.1 tags/shark-6.1
 
-cuda:	tags/shark-cuda-12.2 tags/ort-cuda-11.8 tags/ort-tensorrt-12.3 tags/cuda-tvm-12.2
+cuda:	tags/shark-cuda-12.2 tags/ort-cuda-11.8 tags/ort-tensorrt-12.4 tags/cuda-tvm-12.2
 
 tags/rocm-6.1: rocm-dev
 	docker build --no-cache -f rocm-dev -t rocm:6.1 \
@@ -29,6 +29,12 @@ tags/rocm-5.7: rocm-dev
         --build-arg install_script="https://repo.radeon.com/amdgpu-install/5.7.1/ubuntu/jammy/amdgpu-install_5.7.50701-1_all.deb" \
 	--build-arg vulkan="--vulkan=pro" . 2>&1 | tee logs/rocm-5.7.txt
 	./check_docker.sh rocm:5.7 tags/rocm-5.7
+
+tags/shark-6.1: tags/rocm-6.1 shark-dev
+	docker build --no-cache -f shark-dev -t shark:6.1 \
+	--build-arg shark_branch=main \
+	--build-arg base_docker=rocm:6.1 . 2>&1 | tee logs/shark-6.1.txt
+	./check_docker.sh shark:6.1 tags/shark-6.1
 
 tags/shark-6.0: tags/rocm-6.0 shark-dev
 	docker build --no-cache -f shark-dev -t shark:6.0 \
@@ -102,10 +108,20 @@ tags/ort-cuda-11.8:	tags/cuda-11.8 ort-cuda-dev
 	--build-arg base_docker=cuda:11.8 . 2>&1 | tee logs/ort-cuda-11.8.txt
 	./check_docker.sh ort-cuda:11.8 tags/ort-cuda-11.8
 
+tags/tensorrt-12.4: tensorrt-dev
+	docker build --no-cache -f tensorrt-dev -t tensorrt:12.4 \
+	--build-arg base_docker="nvcr.io/nvidia/tensorrt:24.04-py3" . 2>&1 | tee logs/ort-tensorrt-12.4.txt
+	./check_docker.sh tensorrt:12.4 tags/tensorrt-12.4
+
 tags/tensorrt-12.3: tensorrt-dev
 	docker build --no-cache -f tensorrt-dev -t tensorrt:12.3 \
 	--build-arg base_docker="nvcr.io/nvidia/tensorrt:24.02-py3" . 2>&1 | tee logs/ort-tensorrt-12.3.txt
 	./check_docker.sh tensorrt:12.3 tags/tensorrt-12.3
+
+tags/ort-tensorrt-12.4: tags/tensorrt-12.4 ort-cuda-dev
+	docker build --no-cache -f ort-cuda-dev -t ort-tensorrt:12.4 \
+	--build-arg base_docker=tensorrt:12.4 . 2>&1 | tee logs/ort-tensorrt-12.4.txt
+	./check_docker.sh ort-tensorrt:12.4 tags/ort-tensorrt-12.4
 
 tags/ort-tensorrt-12.3: tags/tensorrt-12.3 ort-cuda-dev
 	docker build --no-cache -f ort-cuda-dev -t ort-tensorrt:12.3 \
