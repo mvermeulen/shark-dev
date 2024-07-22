@@ -4,19 +4,19 @@ CACHE=--cache
 
 all:	rocm
 
-rocm:	rocm61 rocm60 rocm57
+rocm:	rocm61
 
 rocm57:	tags/ort-migraphx-5.7 tags/shark-5.7 tags/rocm-conda-5.7
 
 rocm60:	tags/ort-migraphx-6.0 tags/shark-6.0 tags/rocm-tvm-6.0
 
-rocm61:	tags/rocm-tvm-6.1 tags/ort-migraphx-6.1 tags/shark-6.1
+rocm61:	tags/rocm-tvm-6.1 tags/ort-migraphx-6.1
 
 cuda:	tags/shark-cuda-12.2 tags/ort-cuda-11.8 tags/ort-tensorrt-12.4 tags/cuda-tvm-12.2
 
 tags/rocm-6.1: rocm-dev
 	docker build --no-cache -f rocm-dev -t rocm:6.1 \
-	--build-arg install_script="https://repo.radeon.com/amdgpu-install/6.1/ubuntu/jammy/amdgpu-install_6.1.60100-1_all.deb" \
+	--build-arg install_script="https://repo.radeon.com/amdgpu-install/6.1.2/ubuntu/jammy/amdgpu-install_6.1.60102-1_all.deb" \
 	. 2>&1 | tee logs/rocm-6.1.txt
 	./check_docker.sh rocm:6.1 tags/rocm-6.1
 
